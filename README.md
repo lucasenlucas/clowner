@@ -20,7 +20,6 @@ automatic installer:
 curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh
 ```
 
----
 
 ## 🔧 Usage
 
@@ -34,7 +33,6 @@ clowner <url> -o <output-folder>
 clowner example.com -o copy_example
 ```
 
----
 
 ## 🔄 Update
 
