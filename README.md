@@ -1,5 +1,4 @@
 # Clowner
-
 ---
 
 A simple CLI tool to locally clone any website. One command gives you all HTML, CSS, and JS files neatly separated into folders — perfect for offline testing and analysis.
