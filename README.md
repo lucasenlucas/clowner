@@ -13,7 +13,7 @@ A simple CLI tool to locally clone any website. One command gives you all HTML, 
 
 ```bash
 npm install -g github:lucasenlucas/clowner
-
+```
 ## 🔧 Usage
 clowner <url> -o <output-folder>
 
