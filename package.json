@@ -1,0 +1,16 @@
+{
+  "name": "clowner",
+  "version": "1.0.0",
+  "description": "Clone any website as separate HTML, CSS, and JS files.",
+  "main": "bin/clowner.js",
+  "bin": {
+    "clowner": "./bin/clowner.js"
+  },
+  "author": "Lucas Mangroelal",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
+    "fs-extra": "^11.1.1"
+  }
+}
