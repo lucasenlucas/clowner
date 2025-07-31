@@ -1,15 +1,10 @@
-Tuurlijk Lucas! Hier is je aangepaste `README.md` – netter opgemaakt, gebruiksvriendelijker en iets strakker qua formatting 👇
+# Clowner
 
 ---
-
-````markdown
-# 🕵️ Clowner
 
 A simple CLI tool to locally clone any website. One command gives you all HTML, CSS, and JS files neatly separated into folders — perfect for offline testing and analysis.
 
----
-
-## ✅ Features
+## Features
 
 - Fetches HTML from any public website
 - Automatically downloads linked CSS and JS files
@@ -17,33 +12,25 @@ A simple CLI tool to locally clone any website. One command gives you all HTML, 
 - Works fully offline after cloning
 - Includes `clowner update` command to fetch the latest version
 
----
-
 ## 🚀 Installation
 
-Install globally via GitHub:
+automatic installer:
 
-```bash
-npm install -g github:lucasenlucas/clowner
-````
-
-Or use the automatic installer:
-
-```bash
-curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh | bash
+```
+curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh
 ```
 
 ---
 
 ## 🔧 Usage
 
-```bash
+```
 clowner <url> -o <output-folder>
 ```
 
 📦 Example:
 
-```bash
+```
 clowner example.com -o copy_example
 ```
 
@@ -53,7 +40,7 @@ clowner example.com -o copy_example
 
 Update to the latest version at any time with:
 
-```bash
+```
 clowner update
 ```
 
