@@ -15,7 +15,17 @@ A simple CLI tool to locally clone any website. One command gives you all HTML, 
 npm install -g github:lucasenlucas/clowner
 ```
 ## 🔧 Usage
-clowner <url> -o <output-folder>
 
+```clowner <url> -o <output-folder>```
 Example:
-clowner codeblocks.nl -o local-copy
+```clowner example.com -o copy_example```
+
+## 🔄 Update
+
+To update to the latest version:
+```clowner update```
+
+## ⚠️ Disclaimer
+This tool is for educational purposes only. Do not use it to clone websites without permission. The developer is not responsible for any misuse.
+
+👨‍💻 Created by Lucas Mangroelal
