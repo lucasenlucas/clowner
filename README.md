@@ -63,8 +63,3 @@ The developer is not responsible for any misuse.
 
 
 👨‍💻 Created by **Lucas Mangroelal**
-
-
-
-Wil je er ook badges bovenaan? Zoals `version`, `npm install`, of `license`? Dan voeg ik die toe in Markdown-stijl met shields.io.
-```
