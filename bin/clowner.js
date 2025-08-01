@@ -7,15 +7,13 @@ const path = require("path");
 const { URL } = require("url");
 const { execSync } = require("child_process");
 
-// CLI input
+// 🧠 CLI input
 const args = process.argv.slice(2);
 const command = args[0];
 const outputFlagIndex = args.indexOf("-o");
-const outputDir = outputFlagIndex !== -1 ? args[outputFlagIndex + 1] : "clowned";
+const outputDir = outputFlagIndex !== -1 && args[outputFlagIndex + 1] ? args[outputFlagIndex + 1] : "clowned";
 
-// =====================
-// zo en nu het update gedeelte
-// =====================
+// 🔄 clowner update
 if (command === "update") {
   console.log("🔄 Updating Clowner CLI...");
   try {
@@ -24,13 +22,12 @@ if (command === "update") {
     console.log("✅ Clowner successfully updated.");
   } catch (err) {
     console.error("❌ Update failed:", err.message);
+    process.exit(1);
   }
   process.exit(0);
 }
 
-// =====================
-// het prachtige clown command
-// =====================
+// 👀 Geen URL meegegeven
 if (!command || command.startsWith("-")) {
   console.log("❌ Usage: clowner <url> -o <output-folder>");
   process.exit(1);
@@ -38,13 +35,14 @@ if (!command || command.startsWith("-")) {
 
 const targetUrl = command.startsWith("http") ? command : `https://${command}`;
 
+// 🕵️ Clonen
 (async () => {
   try {
     const res = await axios.get(targetUrl);
     const html = res.data;
     const $ = cheerio.load(html);
 
-    // Mappen
+    // 📁 Mappen aanmaken
     const outHtmlDir = path.join(outputDir, "html");
     const outCssDir = path.join(outputDir, "css");
     const outJsDir = path.join(outputDir, "js");
@@ -52,7 +50,7 @@ const targetUrl = command.startsWith("http") ? command : `https://${command}`;
     await fs.ensureDir(outCssDir);
     await fs.ensureDir(outJsDir);
 
-    // Download CSS
+    // 🎨 CSS downloaden
     const cssLinks = $("link[rel='stylesheet']");
     await Promise.all(cssLinks.map(async (i, el) => {
       const href = $(el).attr("href");
@@ -69,7 +67,7 @@ const targetUrl = command.startsWith("http") ? command : `https://${command}`;
       }
     }).get());
 
-    // Download JS
+    // 📜 JS downloaden
     const scripts = $("script[src]");
     await Promise.all(scripts.map(async (i, el) => {
       const src = $(el).attr("src");
@@ -86,14 +84,14 @@ const targetUrl = command.startsWith("http") ? command : `https://${command}`;
       }
     }).get());
 
-    // HTML opslaan
+    // 📝 HTML opslaan
     await fs.writeFile(path.join(outHtmlDir, "index.html"), $.html());
 
     console.log(`✅ Website cloned to: ${outputDir}/`);
   } catch (err) {
     console.error("❌ Error cloning site:", err.message);
+    process.exit(1);
   }
 })();
 
-// als je dit ziet, thx voor het gebruiken van mijn tool.
-
+// 🎉 Als je dit ziet: thx voor het gebruiken van mijn tool – Lucas
