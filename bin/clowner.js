@@ -7,7 +7,7 @@ const http = require("http");
 const path = require("path");
 const { URL } = require("url");
 
-// ────────── Setup ────────── //
+// ────────── CLI Input ────────── //
 const args = process.argv.slice(2);
 const command = args[0];
 const outputFlagIndex = args.indexOf("-o");
@@ -19,6 +19,8 @@ if (!command || command.startsWith("-")) {
 }
 
 const targetUrl = command.startsWith("http") ? command : `https://${command}`;
+
+// ────────── Helpers ────────── //
 
 function fetchRaw(url) {
   return new Promise((resolve, reject) => {
@@ -48,6 +50,8 @@ function downloadToFile(url, outputPath) {
   });
 }
 
+// ────────── Cloning Logic ────────── //
+
 (async () => {
   try {
     const html = await fetchRaw(targetUrl);
@@ -57,6 +61,7 @@ function downloadToFile(url, outputPath) {
     const cssDir = path.join(outputDir, "css");
     const jsDir = path.join(outputDir, "js");
     const assetsDir = path.join(outputDir, "assets");
+
     await fs.ensureDir(htmlDir);
     await fs.ensureDir(cssDir);
     await fs.ensureDir(jsDir);
@@ -64,7 +69,7 @@ function downloadToFile(url, outputPath) {
 
     const downloadables = [];
 
-    // Handle <link rel="stylesheet">
+    // 🎨 CSS
     $("link[rel='stylesheet']").each((i, el) => {
       const href = $(el).attr("href");
       if (!href) return;
@@ -75,7 +80,7 @@ function downloadToFile(url, outputPath) {
       $(el).attr("href", `../${localPath}`);
     });
 
-    // Handle <script src="">
+    // 📜 JS
     $("script[src]").each((i, el) => {
       const src = $(el).attr("src");
       if (!src) return;
@@ -86,9 +91,8 @@ function downloadToFile(url, outputPath) {
       $(el).attr("src", `../${localPath}`);
     });
 
-    // Handle <img>, <source>, <link rel="icon">, etc.
+    // 🖼️ Assets
     $("[src], [href]").each((i, el) => {
-      const tag = el.tagName;
       const attr = $(el).attr("src") ? "src" : "href";
       const value = $(el).attr(attr);
       if (!value || value.startsWith("data:") || value.startsWith("#")) return;
@@ -98,7 +102,7 @@ function downloadToFile(url, outputPath) {
       if (!isAsset) return;
 
       const fullUrl = new URL(value, targetUrl).href;
-      const filename = `${tag || "asset"}_${i}${ext}`;
+      const filename = `asset_${i}${ext}`;
       const localPath = path.join("assets", filename);
       downloadables.push(downloadToFile(fullUrl, path.join(outputDir, localPath)));
       $(el).attr(attr, `../${localPath}`);
@@ -106,7 +110,7 @@ function downloadToFile(url, outputPath) {
 
     await Promise.all(downloadables);
 
-    // Save HTML
+    // 💾 Save HTML
     await fs.writeFile(path.join(htmlDir, "index.html"), $.html());
     console.log(`✅ Site cloned successfully to '${outputDir}/'`);
   } catch (err) {
