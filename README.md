@@ -19,7 +19,7 @@ A simple CLI tool to locally clone any website. One command gives you all HTML, 
 Use the automatic installer:
 
 ```bash
-curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh | bash
+curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh
 ````
 
 Or install manually:
