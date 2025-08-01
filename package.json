@@ -1,13 +1,20 @@
 {
   "name": "clowner",
   "version": "1.0.0",
-  "description": "Clone any website as separate HTML, CSS, and JS files.",
+  "description": "Clone any website into separate HTML, CSS, and JS files via CLI.",
   "main": "bin/clowner.js",
   "bin": {
     "clowner": "./bin/clowner.js"
   },
   "author": "Lucas Mangroelal",
   "license": "MIT",
+  "keywords": [
+    "cli",
+    "website-cloner",
+    "offline-website",
+    "html-css-js",
+    "nodejs"
+  ],
   "dependencies": {
     "axios": "^1.6.8",
     "cheerio": "^1.0.0-rc.12",
