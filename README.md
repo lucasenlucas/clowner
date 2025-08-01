@@ -1,24 +1,36 @@
 # Clowner
----
 
 A simple CLI tool to locally clone any website. One command gives you all HTML, CSS, and JS files neatly separated into folders — perfect for offline testing and analysis.
 
-## Features
+ 
 
-- Fetches HTML from any public website
-- Automatically downloads linked CSS and JS files
-- Saves everything in a clean folder structure
-- Works fully offline after cloning
-- Includes `clowner update` command to fetch the latest version
+## ✅ Features
+
+- Fetches HTML from any public website  
+- Automatically downloads linked CSS and JS files  
+- Saves everything in a clean folder structure  
+- Works fully offline after cloning  
+- Includes `clowner update` command to fetch the latest version  
+
+ 
 
 ## 🚀 Installation
 
-automatic installer:
+Use the automatic installer:
+
+```bash
+curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh | bash
+````
+
+Or install manually:
 
 ```
-curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh
+git clone https://github.com/lucasenlucas/clowner.git
+cd clowner
+sudo npm install -g .
 ```
 
+ 
 
 ## 🔧 Usage
 
@@ -42,12 +54,17 @@ clowner update
 ```
 
 
-
 ## ⚠️ Disclaimer
 
 This tool is for educational purposes only.
 Do **not** use it to clone websites without permission.
 The developer is not responsible for any misuse.
 
+
+
 👨‍💻 Created by **Lucas Mangroelal**
 
+
+
+Wil je er ook badges bovenaan? Zoals `version`, `npm install`, of `license`? Dan voeg ik die toe in Markdown-stijl met shields.io.
+```
