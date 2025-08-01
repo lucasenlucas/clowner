@@ -16,42 +16,41 @@ A simple CLI tool to locally clone any website. One command gives you all HTML, 
 
 ## 🚀 Installation
 
-Use the automatic installer:
+Clowner requires Node.js (v18 or higher). Here's how to set everything up:
 
-```bash
-curl -s https://raw.githubusercontent.com/lucasenlucas/clowner/main/install.sh
-````
+### 1. Install Node.js (for Linux)
 
-Or install manually:
+If you don't have Node.js or need to upgrade:
 
 ```
-git clone https://github.com/lucasenlucas/clowner.git
-cd clowner
-sudo npm install -g .
+sudo apt remove nodejs npm -y
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs
 ```
-
+Check version: ```node -v``` and ```npm -v``` (Should be v18.x or higher)
  
+### 2. Clone the repo
+```git clone https://github.com/lucasenlucas/clowner.git```
+```cd clowner```
 
-## 🔧 Usage
+### 3. Make the script executable
+```chmod +x bin/clowner.js```
+
+### 4. Install globally
+```sudo npm install -g .```
+
+Done! You can now run clowner anywhere in your terminal:
 
 ```
 clowner <url> -o <output-folder>
 ```
 
-📦 Example:
+Example:
 
 ```
 clowner example.com -o copy_example
 ```
 
-
-## 🔄 Update
-
-Update to the latest version at any time with:
-
-```
-clowner update
-```
 
 
 ## ⚠️ Disclaimer
@@ -62,4 +61,4 @@ The developer is not responsible for any misuse.
 
 
 
-👨‍💻 Created by **Lucas Mangroelal**
+👨‍💻 scripted by **Lucas Mangroelal**
