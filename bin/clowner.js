@@ -1,52 +1,61 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
-const cheerio = require('cheerio');
+const fs = require("fs-extra");
+const path = require("path");
+const axios = require("axios");
+const cheerio = require("cheerio");
 
 const args = process.argv.slice(2);
 
+// 📥 Input check
 if (args.length < 1) {
-  console.error('Gebruik: clowner <url> [-o <mapnaam>]');
+  console.error("❌ Gebruik: clowner <url> [-o <output-folder>]");
   process.exit(1);
 }
 
 const url = args[0];
-const outputIndex = args.indexOf('-o');
-const outputDir = outputIndex !== -1 ? args[outputIndex + 1] : 'cloned-site';
+const outputFlag = args.indexOf("-o");
+const outputDir = outputFlag !== -1 && args[outputFlag + 1] ? args[outputFlag + 1] : "cloned-site";
+
+// 📂 Mappen
+const htmlDir = path.join(outputDir, "html");
+const cssDir = path.join(outputDir, "css");
 
 async function main() {
   try {
+    console.log(`🌐 Downloading HTML from: ${url}`);
     const res = await axios.get(url);
     const html = res.data;
+
     const $ = cheerio.load(html);
+    await fs.ensureDir(htmlDir);
+    await fs.ensureDir(cssDir);
 
-    // Maak outputmap
-    fs.mkdirSync(outputDir, { recursive: true });
+    // 🎨 CSS-bestanden downloaden
+    const cssLinks = $("link[rel='stylesheet']");
+    await Promise.all(cssLinks.map(async (i, el) => {
+      const href = $(el).attr("href");
+      if (!href) return;
 
-    // Schrijf index.html
-    fs.writeFileSync(path.join(outputDir, 'index.html'), html);
-    console.log(`✅ HTML opgeslagen in ${outputDir}/index.html`);
+      const fullUrl = href.startsWith("http") ? href : new URL(href, url).href;
+      const filename = `style${i}.css`;
+      const savePath = path.join(cssDir, filename);
 
-    // Zoek CSS links en download ze
-    const cssLinks = $('link[rel="stylesheet"]');
+      try {
+        const cssRes = await axios.get(fullUrl);
+        await fs.writeFile(savePath, cssRes.data);
+        $(el).attr("href", `../css/${filename}`);
+        console.log(`✅ CSS: ${filename}`);
+      } catch {
+        console.warn(`⚠️  CSS kon niet geladen worden: ${fullUrl}`);
+      }
+    }).get());
 
-    for (let i = 0; i < cssLinks.length; i++) {
-      const href = $(cssLinks[i]).attr('href');
-      if (!href) continue;
-
-      const fullUrl = href.startsWith('http') ? href : new URL(href, url).href;
-      const cssRes = await axios.get(fullUrl);
-      const filename = path.basename(href.split('?')[0]);
-
-      fs.writeFileSync(path.join(outputDir, filename), cssRes.data);
-      console.log(`🎨 CSS opgeslagen: ${filename}`);
-    }
-
-    console.log('✅ Clowner completed!');
+    // 📝 HTML opslaan
+    await fs.writeFile(path.join(htmlDir, "index.html"), $.html());
+    console.log(`✅ Klaar! HTML en CSS opgeslagen in: ${outputDir}/`);
   } catch (err) {
-    console.error('❌ Fout bij downloaden:', err.message);
+    console.error("❌ Er ging iets mis:", err.message);
   }
 }
 
